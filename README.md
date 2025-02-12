@@ -1,36 +1,74 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# SalesAI - AI-Powered Sales Assistant
 
-## Getting Started
+This project implements an AI-powered sales assistant using Next.js, Twilio, ElevenLabs, and WebSocket for real-time voice communication.
 
-First, run the development server:
+## Prerequisites
 
+- Node.js 16+ installed
+- Twilio account with an active phone number
+- ElevenLabs account with a configured Conversational Agent
+- ngrok for local development
+
+## Setup
+
+1. Clone the repository and install dependencies:
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+cd salesai
+npm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Configure environment variables:
+Copy `.env.example` to `.env` and fill in your credentials:
+```
+ELEVENLABS_AGENT_ID=your_agent_id_here
+TWILIO_ACCOUNT_SID=your_account_sid_here
+TWILIO_AUTH_TOKEN=your_auth_token_here
+TWILIO_PHONE_NUMBER=your_twilio_phone_number_here
+NGROK_URL=your_ngrok_url_here
+PORT=8000
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+3. Start ngrok:
+```bash
+ngrok http 8000
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+4. Update your Twilio webhook URL:
+- Go to the Twilio Console
+- Navigate to Phone Numbers → Manage → Active numbers
+- Select your phone number
+- Under "Voice Configuration", set the webhook for incoming calls to: `https://your-ngrok-url.ngrok.app/incoming-call-eleven`
+- Set the HTTP method to POST
 
-## Learn More
+## Running the Application
 
-To learn more about Next.js, take a look at the following resources:
+1. Start the server:
+```bash
+node server.js
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+2. In a new terminal, start the Next.js development server:
+```bash
+npm run dev
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+3. Open your browser and navigate to `http://localhost:3000`
 
-## Deploy on Vercel
+## Usage
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+1. Enter the lead's name and phone number in the web interface
+2. Click "Start Call" to initiate the call
+3. The AI agent will handle the conversation using ElevenLabs' voice synthesis
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Features
+
+- Real-time voice communication using WebSocket
+- Integration with ElevenLabs' Conversational AI
+- Beautiful UI for managing sales calls
+- Twilio integration for phone calls
+
+## Important Notes
+
+- Make sure your ElevenLabs agent is configured with the correct audio format (μ-law 8000 Hz)
+- Keep your environment variables secure and never commit them to version control
+- Monitor your Twilio and ElevenLabs usage to manage costs
