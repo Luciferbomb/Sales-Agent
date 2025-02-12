@@ -2,6 +2,7 @@ services:
   - type: web
     name: salesai-frontend
     env: node
+    plan: free
     buildCommand: npm install && npm run build
     startCommand: npm start
     envVars:
@@ -10,10 +11,15 @@ services:
           name: salesai-backend
           type: web
           property: host
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 3000
 
   - type: web
     name: salesai-backend
     env: node
+    plan: free
     buildCommand: cd server && npm install
     startCommand: cd server && node server.js
     envVars:
@@ -26,4 +32,11 @@ services:
       - key: TWILIO_PHONE_NUMBER
         sync: false
       - key: PORT
-        value: 8000 
+        value: 8000
+      - key: NODE_ENV
+        value: production
+      - key: FRONTEND_URL
+        fromService:
+          name: salesai-frontend
+          type: web
+          property: host 
