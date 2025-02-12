@@ -9,10 +9,10 @@ const nextConfig = {
     return [
       {
         source: '/api/:path*',
-        destination: 'http://salesai-backend:8000/:path*',
+        destination: `${process.env.BACKEND_URL || 'http://localhost:8000'}/:path*`,
       },
     ];
   },
 }
 
-export default nextConfig
+module.exports = nextConfig

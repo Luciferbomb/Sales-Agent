@@ -10,11 +10,9 @@ services:
         fromService:
           name: salesai-backend
           type: web
-          property: host
+          property: url
       - key: NODE_ENV
         value: production
-      - key: PORT
-        value: 3000
 
   - type: web
     name: salesai-backend
@@ -39,4 +37,4 @@ services:
         fromService:
           name: salesai-frontend
           type: web
-          property: host 
+          property: url 
